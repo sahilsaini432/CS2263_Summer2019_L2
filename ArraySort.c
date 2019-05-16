@@ -1,15 +1,15 @@
 /********************************
- * 
+ *
  * ArraySort.c
- * 
+ *
  * Created by Jean-Philippe Legault
- * 
+ *
  * Your task is to implement in place sorting using the two available functions
  * swapAdjacent, and compareAdjacent.
- * 
+ *
  * Some bug might have been introduced... you will have to find out if there are any!
  * if so, you will have to correct it
- * 
+ *
  ********************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,24 +29,34 @@ void printArray(int *array, int size)
 }
 
 void swapAdjacent(int *a, int index)
-{    
-    int *temp = a + index;
-    *(a + index) = *(a + index + 1);    
-    *(a + index + 1) = *temp;
+{
+    int temp = *(a + index);
+    *(a + index) = *(a + index + 1);
+    *(a + index + 1) = temp;
 }
 
 int compareAdjacent(int *a, int index)
 {
-    return *a + index - *a + index + 1;
+    return *(a + index) - *(a + index + 1);
 }
 
 /**
  * TODO: implement in place sorting on an array
  * by using the two functions swapAdjacent and compareAdjacent
  */
-void inPlaceSort(/* your input parameter */)
+void inPlaceSort(int *a , int array_size)
 {
-
+  for (int i = 0; i < array_size-1; i++)
+  {
+    for (int j = 0; j < (array_size - i - 1); j++)
+    {
+      int compare = compareAdjacent(a,j);
+      if (compare > 0)
+      {
+        swapAdjacent(a,j);
+      }
+    }
+  }
 }
 
 int main(void)
@@ -66,19 +76,16 @@ int main(void)
     }
 
     int a[array_size];
+    int value = 0;
+    int count = 0;
 
-    /**********************
-     * TODO finish parsing the user input to fill the array
-     * 
-     * it should parse user input with scanf to fill the array with values
-     **********************/
-
-    printf("=== Array before Sorting = ");
-    printArray(a, array_size);
-
-    inPlaceSort(/* your input parameter */);
-
-    printf("=== Array after Sorting = ");
+    while(count != array_size && scanf("%d",&value))
+    {
+      a[count] = value;
+      count++;
+    }
+    printArray(a,array_size);
+    inPlaceSort(a,array_size);
     printArray(a, array_size);
 
 }
